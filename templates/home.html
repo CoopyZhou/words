@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复习单词</title>
+</head>
+<body>
+    <h1>复习单词</h1>
+    {% if word %}
+    <p>单词：{{ word }}</p>
+    {% if show_explanation %}
+        <p>解释：{{ words[word].explanation }}</p>
+        <form action="{{ url_for('next_word') }}" method="post">
+            <button type="submit">记忆下一个单词</button>
+        </form>
+    {% else %}
+        <form action="{{ url_for('remember_word') }}" method="post">
+            <input type="hidden" name="word" value="{{ word }}">
+            <button type="submit">记住</button>
+        </form>
+        <form action="{{ url_for('forget_word') }}" method="post">
+            <input type="hidden" name="word" value="{{ word }}">
+            <button type="submit">遗忘</button>
+        </form>
+    {% endif %}
+{% else %}
+    <p>今日已无需要复习的单词</p>
+{% endif %}
+
+    <h3>导航</h3>
+    <ul>
+        <li><a href="/add">添加单词</a></li>
+        <li><a href="/list">查看单词列表</a></li>
+    </ul>
+</body>
+</html>
